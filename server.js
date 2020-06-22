@@ -29,8 +29,10 @@ const usersRouter = require('./routes/users');
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
 
+const Exercise = require('./models/exercise.model');
+
 app.get('/', (req, res) => {
-  res.send('Heroku');
+  Exercise.find().then((exe) => res.json(exe));
 });
 
 if (process.env.NODE_ENV === 'production') {
