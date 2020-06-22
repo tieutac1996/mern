@@ -29,10 +29,17 @@ const usersRouter = require('./routes/users');
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
 
+const data = [
+  {
+    username: '123',
+    description: '321',
+    duration: 343,
+  },
+];
 const Exercise = require('./models/exercise.model');
 
 app.get('/', (req, res) => {
-  Exercise.find().then((exe) => res.json(exe));
+  res.json(data);
 });
 
 if (process.env.NODE_ENV === 'production') {
