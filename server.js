@@ -3,11 +3,13 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 
+require('dotenv').config();
+
 const app = express();
 const port = process.env.PORT || 5000;
 
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {
@@ -15,7 +17,6 @@ mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true,
 });
-const connection = mongoose.connection;
 
 mongoose.connection.on('connected', () => {
   console.log('Mongoose is connected!!!!');
@@ -26,6 +27,8 @@ const usersRouter = require('./routes/users');
 
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
+
+const Exercise = require('./models/exercise.model');
 
 app.get('/', (req, res) => {
   res.send(process.env.ATLAS_URI);
